@@ -1,0 +1,68 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h1 style="text-align: center; "><u>Hello {{ user.username }}</u></h1>
+<div>
+    <a href="/profile_update" style="float: left;"><button>Update Profile</button></a>
+    <img style="width: 180px; height: 200px; float: right; border-radius: 5px;  border: 2px solid black; margin-bottom: 10px;"
+        src="{{ user.profile.image.url }}" />
+</div>
+<p>
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+</p>
+<table>
+
+    <tr>
+        <td>Username</td>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+        <td>First Name</td>
+        <td>{{ user.first_name }}</td>
+    </tr>
+    <tr>
+        <td>Last Name</td>
+        <td>{{ user.last_name }}</td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>{{ user.profile.gender }}</td>
+    </tr>
+</table>
+
+<h1 style="text-align: center; margin-top: 20px;"><u>Posts Details</u></h1>
+<div class="post-by-user">
+
+    {% for post in posts %}
+    <h1 style="color: #C25100;"><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h1>
+    <aside class="actions" style="float: right; margin: 10px;">
+        <a class="btn btn-default" href="{% url 'delete' slug=post.slug %}">
+            {% include './icons/trash-fill.svg' %}
+        </a>
+    </aside>
+    <aside class="actions" style="float: right; margin: 10px;">
+        <a class="btn btn-default" href="{% url 'post_edit' slug=post.slug %}">
+            {% include './icons/pencil-fill.svg' %}
+        </a>
+    </aside>
+    <p><span>{{ post.published_date }}</span></p>
+    <p style="color: #C25100;">{{ post.text }}</p>
+    <p><span>Category: <a href="{% url 'post_by_category' post.category.slug %}">
+                {{ post.category.name }}</a></span></p>
+
+    <p><span>Tag:
+            {% for tag in post.tags.all %}
+            <a href="{% url 'post_by_tag' tag.slug %}">{{ tag.name }}</a>
+            {% empty %}
+            kucg
+            {% endfor %}
+        </span></p>
+    <hr>
+    {% endfor %}
+</div>
+{% endblock %}

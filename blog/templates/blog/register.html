@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    <table class="none-border">
+        <tr>
+            <td>{{ form.as_p }}</td>
+        </tr>
+    </table>
+    <button style="background-color:#C25100; margin-top: 20px; color:blue; border: none;" class="btn btn-outline-info"
+        type="submit">Sign
+        Up</button>
+</form>
+If you already have an account <a href="/login" target="blank"><strong>login</strong></a> instead.
+
+{% endblock %}
